@@ -26,7 +26,7 @@ export default function BasketSummary() {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <span style={{ fontStyle: 'italic' }}>*Orders over $100 qualify for free delivery</span>
+                                <span style={{ fontStyle: 'italic' }}>*Orders over ₹1000 qualify for free delivery</span>
                             </TableCell>
                         </TableRow>
                     </TableBody>
