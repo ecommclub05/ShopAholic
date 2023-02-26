@@ -31,7 +31,7 @@ namespace API.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<int>(type: "INTEGER", nullable: false),
-                    BasketId = table.Column<int>(type: "INTEGER", nullable: false)
+                    BasketId = table.Column<int>(type: "INTEGER", nullable: false)      // we can't have a BasketItem without a Basket hence not nullable
                 },
                 constraints: table =>
                 {
@@ -41,13 +41,13 @@ namespace API.Data.Migrations
                         column: x => x.BasketId,
                         principalTable: "Baskets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);       // a BasketItem cannot exist without a Basket hence Cascade Delete
                     table.ForeignKey(
                         name: "FK_BasketItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);       // a BasketItem cannot exist without a Product hence Cascade Delete
                 });
 
             migrationBuilder.CreateIndex(

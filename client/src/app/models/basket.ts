@@ -1,4 +1,4 @@
-export interface BasketItem {
+export interface BasketItem {       // tell react what the basket item looks like
     productId: number;
     name: string;
     price: number;
@@ -8,7 +8,7 @@ export interface BasketItem {
     quantity: number;
 }
 
-export interface Basket {
+export interface Basket {       // tell react what the basket looks like
     id: number;
     buyerId: string;
     items: BasketItem[];

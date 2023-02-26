@@ -2,9 +2,9 @@ using API.Entities;
 
 namespace API.Data
 {
-    public static class DbInitializer
+    public static class DbInitializer 
     {
-        public static void Initialize(StoreContext context)
+        public static void Initialize(StoreContext context)     
         {
             if (context.Products.Any()) return;
 

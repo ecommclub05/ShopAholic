@@ -12,13 +12,13 @@ import { StoreProvider } from './app/context/StoreContext';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+const root = ReactDOM.createRoot(                   // create the root
+  document.getElementById('root') as HTMLElement    // get the root element
 );
-root.render(
-  <React.StrictMode>
+root.render(                                  
+  <React.StrictMode>                      
     <StoreProvider>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} />    
     </StoreProvider>
   </React.StrictMode>
 );

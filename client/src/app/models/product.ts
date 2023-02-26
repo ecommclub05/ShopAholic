@@ -1,4 +1,4 @@
-export interface Product {
+export interface Product {      // tell react what the product looks like
     id: number,
     name: string,
     description: string,

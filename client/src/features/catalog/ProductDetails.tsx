@@ -8,50 +8,50 @@ import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { Product } from "../../app/models/product";
 
-export default function ProductDetails() {
-    const { basket, setBasket, removeItem } = useStoreContext();
-    const { id } = useParams<{ id: string }>();
-    const [product, setProduct] = useState<Product | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [quantity, setQuantity] = useState(0);
-    const [submitting, setSubmitting] = useState(false);
-    const item = basket?.items.find(i => i.productId === product?.id);
+export default function ProductDetails() {                                          // the product details component
+    const { basket, setBasket, removeItem } = useStoreContext();            // get the basket, setBasket and removeItem functions from the context
+    const { id } = useParams<{ id: string }>();                             // get the id from the url
+    const [product, setProduct] = useState<Product | null>(null);           // set the product state
+    const [loading, setLoading] = useState(true);                           // set the loading state
+    const [quantity, setQuantity] = useState(0);                             // set the quantity state
+    const [submitting, setSubmitting] = useState(false);                    // set the submitting state
+    const item = basket?.items.find(i => i.productId === product?.id);      // find the item in the basket
 
-    useEffect(() => {
-        if (item) setQuantity(item.quantity);
-        id && agent.Catalog.details(parseInt(id))
-            .then(response => setProduct(response))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false))
+    useEffect(() => {       
+        if (item) setQuantity(item.quantity);                        // if the item is in the basket, set the quantity to the item quantity
+        id && agent.Catalog.details(parseInt(id))                   // if the id is in the url, get the product details
+            .then(response => setProduct(response))                 // set the product
+            .catch(error => console.log(error))                      // log any errors
+            .finally(() => setLoading(false))                // set the loading state to false
     }, [id, item]);
 
-    function handleInputChange(e: any) {
-        if (e.target.value >= 0)
-            setQuantity(parseInt(e.target.value));
-    }
+    function handleInputChange(e: any) {                     // handle input change
+        if (e.target.value >= 0)                        // if the value is greater than or equal to 0
+            setQuantity(parseInt(e.target.value));      // set the quantity to the value
+    }                                           
 
-    function handleUpdateCart() {
-        setSubmitting(true);
-        if (!item || quantity > item?.quantity) {
-            const updatedQuantity = item ? quantity - item.quantity : quantity;
-            agent.Basket.addItem(product?.id!, updatedQuantity)
-                .then(basket => setBasket(basket))
-                .catch(error => console.log(error))
-                .finally(() => setSubmitting(false));
-        } else {
-            const updatedQuantity = item.quantity - quantity;
-            agent.Basket.removeItem(product?.id!, updatedQuantity)
-                .then(() => removeItem(product?.id!, updatedQuantity))
-                .catch(error => console.log(error))
-                .finally(() => setSubmitting(false));
+    function handleUpdateCart() {                    // handle update cart
+        setSubmitting(true);                        // set the submitting state to true
+        if (!item || quantity > item?.quantity) {                                   // if the item is not in the basket or the quantity is greater than the item quantity
+            const updatedQuantity = item ? quantity - item.quantity : quantity;     // set the updated quantity to the quantity minus the item quantity
+            agent.Basket.addItem(product?.id!, updatedQuantity)                     // add the item to the basket
+                .then(basket => setBasket(basket))                                  // set the basket
+                .catch(error => console.log(error))                                 // log any errors
+                .finally(() => setSubmitting(false));                               // set the submitting state to false
+        } else {                                                                // if the item is in the basket and the quantity is less than the item quantity
+            const updatedQuantity = item.quantity - quantity;               // set the updated quantity to the item quantity minus the quantity
+            agent.Basket.removeItem(product?.id!, updatedQuantity)              // remove the item from the basket
+                .then(() => removeItem(product?.id!, updatedQuantity))      // remove the item from the basket
+                .catch(error => console.log(error))                    // log any errors
+                .finally(() => setSubmitting(false));           // set the submitting state to false
         }
     }
 
-    if (loading) return <LoadingComponent message="Loading product..." />
+    if (loading) return <LoadingComponent message="Loading product..." />       // if loading, return the loading component
 
-    if (!product) return <NotFound />
+    if (!product) return <NotFound />                                    // if the product is null, return the not found component
 
-    return (
+    return (                                                // return the product details
         <Grid container spacing={6}>
             <Grid item xs={6}>
                 <img src={product.pictureUrl} alt={product.name} style={{ width: '100%' }} />

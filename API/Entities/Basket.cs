@@ -2,11 +2,11 @@ namespace API.Entities
 {
     public class Basket
     {
-        public int Id { get; set; }
-        public string BuyerId { get; set; }
-        public List<BasketItem> Items { get; set; } = new List<BasketItem>();
+        public int Id { get; set; }     // Primary Key
+        public string BuyerId { get; set; }     // Foreign Key
+        public List<BasketItem> Items { get; set; } = new List<BasketItem>();       // Navigation Property i.e a Basket HAS many BasketItems
 
-        public void AddItem(Product product, int quantity)
+        public void AddItem(Product product, int quantity)      // Add a Product to the Basket
         {
             if (Items.All(item => item.ProductId != product.Id))
             {
@@ -18,7 +18,7 @@ namespace API.Entities
             if (existingItem != null) existingItem.Quantity += quantity;
         }
 
-        public void RemoveItem(int productId, int quantity = 1)
+        public void RemoveItem(int productId, int quantity = 1)     // Remove a Product from the Basket
         {
             var item = Items.FirstOrDefault(basketItem => basketItem.ProductId == productId);
             if (item == null) return;

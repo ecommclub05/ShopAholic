@@ -11,33 +11,33 @@ import LoadingComponent from "./LoadingComponent";
 import HomePage from "../../features/home/HomePage";
 
 function App() {
-  const location = useLocation();
-  const {setBasket} = useStoreContext();
-  const [loading, setLoading] = useState(true);
+  const location = useLocation();   // get the location
+  const {setBasket} = useStoreContext();    // get the setBasket function from the context
+  const [loading, setLoading] = useState(true);   // loading state
 
-  useEffect(() => {
-    const buyerId = getCookie('buyerId');
-    if (buyerId) {
-      agent.Basket.get()
-        .then(basket => setBasket(basket))
-        .catch(error => console.log(error))
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+  useEffect(() => {                         // on mount
+    const buyerId = getCookie('buyerId');   // get the buyerId cookie
+    if (buyerId) {                      // if the buyerId exists
+      agent.Basket.get()                // get the basket
+        .then(basket => setBasket(basket))  // set the basket
+        .catch(error => console.log(error)) // log any errors
+        .finally(() => setLoading(false));  // set loading to false
+    } else {                        // if the buyerId does not exist
+      setLoading(false);            // set loading to false
     }
-  }, [setBasket])
+  }, [setBasket])                  // run this effect when the setBasket function changes
 
 
-  const newTheme = createTheme({
+  const newTheme = createTheme({    // create a new theme
     palette: {
       primary: {
-        light: '#DBA747',
-        main: '#d29219',
+        light: '#DBA747',   
+        main: '#d29219',    
         dark: '#936611',
         contrastText: '0 0 0 0.87',
       },
       secondary: {
-        light: '#F73378',
+        light: '#F73378',   
         main: '#F50057',
         dark: '#AB003C',
         contrastText: '#FFFFFF',
@@ -65,7 +65,7 @@ function App() {
 
   
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>   
       <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
       <CssBaseline />
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange}  />

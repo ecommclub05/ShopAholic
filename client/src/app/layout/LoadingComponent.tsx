@@ -1,10 +1,10 @@
 import { Backdrop, Box, CircularProgress, Typography } from "@mui/material"
 
-interface Props {
+interface Props {       // interface for the props
     message?: string
 }
 
-export default function LoadingComponent({ message = 'Loading...' }: Props) {
+export default function LoadingComponent({ message = 'Loading...' }: Props) {       // the loading component
     return (
         <Backdrop open={true} invisible={true}>
             <Box alignItems='center' display='flex' justifyContent='center' height='100vh'>

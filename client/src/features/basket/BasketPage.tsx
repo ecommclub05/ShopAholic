@@ -7,22 +7,22 @@ import agent from "../../app/api/agent";
 import { useStoreContext } from "../../app/context/StoreContext";
 import BasketSummary from "./BasketSummary";
 
-export default function BasketPage() {
-    const { basket, setBasket, removeItem } = useStoreContext();
-    const [status, setStatus] = useState({
-        loading: false,
-        name: ''
+export default function BasketPage() {      // the basket page
+    const { basket, setBasket, removeItem } = useStoreContext();        // get the basket, setBasket and removeItem functions from the context
+    const [status, setStatus] = useState({                              // status state
+        loading: false,                                            // loading state
+        name: ''                                                    // name state
     });
 
-    function handleAddItem(productId: number, name: string) {
-        setStatus({ loading: true, name });
-        agent.Basket.addItem(productId)
-            .then(basket => setBasket(basket))
-            .catch(error => console.log(error))
-            .finally(() => setStatus({ loading: false, name: '' }))
+    function handleAddItem(productId: number, name: string) {       // handle add item
+        setStatus({ loading: true, name });                    // set the status to loading and the name
+        agent.Basket.addItem(productId)                         // add the item to the basket    
+            .then(basket => setBasket(basket))                  // set the basket
+            .catch(error => console.log(error))                 // log any errors
+            .finally(() => setStatus({ loading: false, name: '' })) // set the status to not loading and the name to empty
     }
 
-    function handleRemoveItem(productId: number, quantity = 1, name: string) {
+    function handleRemoveItem(productId: number, quantity = 1, name: string) {      // handle remove item
         setStatus({ loading: true, name });
         agent.Basket.removeItem(productId, quantity)
             .then(() => removeItem(productId, quantity))
@@ -30,7 +30,7 @@ export default function BasketPage() {
             .finally(() => setStatus({ loading: false, name: '' }))
     }
 
-    if (!basket) return <Typography variant="h3">Your basket is empty</Typography>
+    if (!basket) return <Typography variant="h3">Your basket is empty</Typography>      // if the basket is empty, return the text
 
     return (
         <>
@@ -39,7 +39,7 @@ export default function BasketPage() {
                     <TableHead>
                         <TableRow>
                             <TableCell>Product</TableCell>
-                            <TableCell align="right">Price</TableCell>
+                            <TableCell align="right">Price</TableCell>      
                             <TableCell align="center">Quantity</TableCell>
                             <TableCell align="right">Subtotal</TableCell>
                             <TableCell align="right"></TableCell>

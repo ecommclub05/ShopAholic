@@ -7,23 +7,23 @@ import { useStoreContext } from "../../app/context/StoreContext";
 import { Product } from "../../app/models/product";
 import { currencyFormat } from "../../app/util/util";
 
-interface Props {
-    product: Product;
+interface Props {       // the props interface
+    product: Product;       // the product
 }
 
-export default function ProductCard({ product }: Props) {
-    const [loading, setLoading] = useState(false);
-    const {setBasket} = useStoreContext();
+export default function ProductCard({ product }: Props) {       // the product card component
+    const [loading, setLoading] = useState(false);              // the loading state
+    const {setBasket} = useStoreContext();                // get the setBasket function from the context
 
-    function handleAddItem(productId: number, quantity = 1) {
-        setLoading(true);
-        agent.Basket.addItem(productId, quantity)
-            .then(basket => setBasket(basket))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false))
+    function handleAddItem(productId: number, quantity = 1) {     // handle add item
+        setLoading(true);                                   // set the loading state to true
+        agent.Basket.addItem(productId, quantity)           // add the item to the basket
+            .then(basket => setBasket(basket))              // set the basket
+            .catch(error => console.log(error))             // log any errors
+            .finally(() => setLoading(false))               // set the loading state to false
     };
     
-    return (
+    return (        
         <Card>
             <CardHeader
                 avatar={
